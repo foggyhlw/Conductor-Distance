@@ -1,1 +1,3 @@
 # Conductor-Distance
+multi delata catenaryline formula用于计算多个应力下悬链线弧垂特性，用于比较
+CatenaryLine_Distance_Solver_optimised用于计算悬挂点间最近距离
