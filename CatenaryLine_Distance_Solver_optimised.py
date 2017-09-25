@@ -4,14 +4,14 @@ import math
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 #用于解超越方程
-from sympy import *
-
+from sympy import Symbol,solveset
+import configparser
 lineType=['Parabola','Catenary']
-#dec计算输出精度，小数点后位数
+#dec计算输出精度，小数点后位数7
 dec=4
 e=math.e
 #电线比载gama  N/mm2*m
-gama=0.033
+gama=0.04306
 #导线水平应力delta  N/mm2
 delta=30
 delta_sequence=[5,10,20,30,40,50,60,70]
@@ -140,19 +140,40 @@ def Find_closest_distance(line1,line2,x_start,x_end):
         #print('dist',distance_between_points(position1,position2))
         return round(closest_distance,4),position1,position2
 
+def read_points():
+    def str2float(config):
+        assert(type(config)==str)
+        p=list(config.strip('[]()').split(','))
+        assert(type(p)==list)
+        assert(type(p[0])==str)
+        p=[float(i) for i in p]
+        return p
+    config=configparser.ConfigParser()
+    config.read('coordinates.txt')
+    Default_config=config['Default']
+    #print(type(Default_config['p1']))
+    p1=str2float(Default_config['p1'])
+    p2=str2float(Default_config['p2'])
+    p3=str2float(Default_config['p3'])
+    p4=str2float(Default_config['p4'])
+    p5=str2float(Default_config['p5'])
+    p6=str2float(Default_config['p6'])
+    return Point(*p1),Point(*p2),Point(*p3),Point(*p4),Point(*p5),Point(*p6)
+
+point1,point2,point3,point4,point5,point6=read_points()
 #三相导线对应挂点坐标组合 A相导线
-point1=Point(0,12.2,0)
-point2=Point(67,2,13.2)
+#point1=Point(0,0,10)
+#point2=Point(61.1,11.74,18)
 #line1=CatenaryLine(point1,point2,gama,delta)
 
 #B相导线
-point3=Point(0,14.4,0)
-point4=Point(67.5,2.5,9.6)
+#point3=Point(0,2.2,10)
+#point4=Point(61.1,11.84,26.2)
 #line2=CatenaryLine(point3,point4,gama,delta)
 
 #C相导线
-point5=Point(0,10,0)
-point6=Point(67,2,6)
+#point5=Point(0,-2.2,10)
+#point6=Point(61.1,11.24,22)
 #line3=CatenaryLine(point5,point6,gama,delta)
 
 #根据不同应力（弧垂）来批量计算最短距离
@@ -202,7 +223,7 @@ def verify(delta):
         zhfont = FontProperties(fname='C:\Windows\Fonts\simsun.ttc',size=14)
         fig,ax=plt.subplots()
         ax = fig.add_subplot(111, projection='3d')
-        plt.title('紧线后相间距',fontproperties=zhfont)
+        plt.title('相间距',fontproperties=zhfont)
         ax.set_xlabel('  单位：m',fontproperties=zhfont)
         ax.set_ylabel('  单位：m',fontproperties=zhfont)
         ax.set_zlabel('  单位：m',fontproperties=zhfont)
@@ -257,6 +278,6 @@ def verify(delta):
 
 #batch_cal()
 #用来验证
-verify(7)
+verify(7.12)
 # for i in delta_sequence:
 #     verify(i)
