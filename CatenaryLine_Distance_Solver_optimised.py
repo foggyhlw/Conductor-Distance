@@ -149,9 +149,9 @@ def read_points():
         p=[float(i) for i in p]
         return p
     config=configparser.ConfigParser()
-    config.read('coordinates.txt')
+    config.read('coordinates.txt',encoding='ISO-8859-1')
     Default_config=config['Default']
-    #print(type(Default_config['p1']))
+    print(type(Default_config['p1']))
     p1=str2float(Default_config['p1'])
     p2=str2float(Default_config['p2'])
     p3=str2float(Default_config['p3'])
