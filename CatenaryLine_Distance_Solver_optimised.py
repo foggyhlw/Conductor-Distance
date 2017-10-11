@@ -15,7 +15,7 @@ gama=0.04306
 #导线水平应力delta  N/mm2
 delta=30
 delta_sequence=[5,10,20,30,40,50,60,70]
-L=67
+#L=67
 def ch(x):
     return((e**x+e**(-x))/2)
 def sh(x):
@@ -220,13 +220,22 @@ def verify(delta):
     def draw():
         step=0.1
         x=np.arange(0,line1.x_lenth()+step,step)
-        zhfont = FontProperties(fname='C:\Windows\Fonts\simsun.ttc',size=14)
-        fig,ax=plt.subplots()
-        ax = fig.add_subplot(111, projection='3d')
-        plt.title('相间距',fontproperties=zhfont)
-        ax.set_xlabel('  单位：m',fontproperties=zhfont)
-        ax.set_ylabel('  单位：m',fontproperties=zhfont)
-        ax.set_zlabel('  单位：m',fontproperties=zhfont)
+        import platform
+        if platform.system()=='Windows':
+            zhfont = FontProperties(fname='C:\Windows\Fonts\simsun.ttc',size=14)
+            fig,ax=plt.subplots()
+            ax = fig.add_subplot(111, projection='3d')
+            plt.title('相间距',fontproperties=zhfont)
+            ax.set_xlabel('  单位：m',fontproperties=zhfont)
+            ax.set_ylabel('  单位：m',fontproperties=zhfont)
+            ax.set_zlabel('  单位：m',fontproperties=zhfont)
+        if platform.system()=='Darwin':
+            fig,ax=plt.subplots()
+            ax = fig.add_subplot(111, projection='3d')
+            plt.title('相间距')
+            ax.set_xlabel('  单位：m')
+            ax.set_ylabel('  单位：m')
+            ax.set_zlabel('  单位：m')
         y1,z1=line1.calculate_yzs(x)
         y2,z2=line2.calculate_yzs(x)
         y3,z3=line3.calculate_yzs(x)
