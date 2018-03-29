@@ -94,6 +94,7 @@ class CatenaryLine():
         return self.Lv
 
     def calculate_fm(self):
+    	#计算最大弧垂
         if self.formula=="Catenary":
             #悬链线方程过于复杂，最大弧垂采用斜抛线方程计算式
             fm=self.gama*self.L**2/8/self.delta/math.cos(self.beta)
@@ -287,6 +288,6 @@ def verify(delta):
 
 #batch_cal()
 #用来验证
-verify(3)
+verify(20)
 # for i in delta_sequence:
 #     verify(i)
