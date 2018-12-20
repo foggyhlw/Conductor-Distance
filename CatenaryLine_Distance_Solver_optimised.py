@@ -287,6 +287,6 @@ def verify(delta):
 
 #batch_cal()
 #用来验证
-verify(3)
+verify(10)
 # for i in delta_sequence:
 #     verify(i)
